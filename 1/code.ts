@@ -1,11 +1,9 @@
 import { readFile } from "fs/promises";
+const sum = (arr: number[]) => arr.reduce((sum, val) => sum + val, 0);
 
-const input = await readFile("./1/input");
-
-const elfLoads = input
+const elfLoads = (await readFile("./1/input"))
   .toString("utf8")
   .split("\n\n")
-  .map((load) => load.split("\n").reduce((sum, val) => sum + Number(val), 0))
+  .map((load) => sum(load.split("\n").map((x) => Number(x))))
   .sort((a, b) => b - a);
-console.log(elfLoads[0]);
-console.log(elfLoads.slice(0, 3).reduce((sum, val) => sum + Number(val), 0));
+console.log(elfLoads[0], sum(elfLoads.slice(0, 3)));

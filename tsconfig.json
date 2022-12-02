@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "esModuleInterop": true,
-    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "esModuleInterop": false,
     "module": "ES2022",
     "target": "ES2022",
     "strict": true,

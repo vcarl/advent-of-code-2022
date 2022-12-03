@@ -4,7 +4,7 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "start": "nodemon ./2/code"
+    "start": "nodemon --exec ts-node --esm ./3/code.ts"
   },
   "author": "Carl Vitullo",
   "license": "UNLICENSED",

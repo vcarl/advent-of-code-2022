@@ -11,5 +11,9 @@
   "devDependencies": {
     "nodemon": "^2.0.20",
     "ts-node": "^10.9.1"
+  },
+  "dependencies": {
+    "@types/lodash-es": "^4.17.6",
+    "lodash-es": "^4.17.21"
   }
 }

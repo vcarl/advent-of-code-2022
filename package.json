@@ -4,13 +4,15 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "start": "nodemon --exec ts-node --esm ./3/code.ts"
+    "start": "nodemon --exec ts-node --esm ./3/code.ts",
+    "test": "vitest dev ./3"
   },
   "author": "Carl Vitullo",
   "license": "UNLICENSED",
   "devDependencies": {
     "nodemon": "^2.0.20",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "vitest": "^0.25.3"
   },
   "dependencies": {
     "@types/lodash-es": "^4.17.6",

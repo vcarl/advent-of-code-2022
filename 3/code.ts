@@ -1,8 +1,7 @@
 import { readFile } from "fs/promises";
-import { chunk } from "lodash-es";
-import { sum } from "../helpers";
+import { chunkBy, sum } from "../helpers";
 
-const input = (await readFile("./3/input")).toString("utf8").trim();
+const input = (await readFile("./3/input")).toString("utf8");
 
 const getPriority = (char: string) => {
   if (char.length < 1) throw new Error("char is 0 length, expected 1");
@@ -17,35 +16,38 @@ const getPriority = (char: string) => {
   return codepoint > 95 ? codepoint - 96 : codepoint - 38;
 };
 
-export const day3part1 = (input: string) => {
-  const itemPriorities = input
+const getCompartments = (bag: string) => [
+  bag.slice(0, bag.length / 2),
+  bag.slice(bag.length / 2),
+];
+
+const findItem = (bags: string[]) => {
+  const [one, ...others] = bags;
+  const match =
+    one.split("").find((x) => others.every((y) => y.includes(x))) || "";
+  if (!match) {
+    throw new Error(`failed to find a match! Is the input valid? ${bags}`);
+  }
+  return match;
+};
+
+export const day3part1 = (input: string) =>
+  input
     .trim()
     .split("\n")
-    .map((bag) => {
-      const bag1 = bag.slice(0, bag.length / 2);
-      const bag2 = bag.slice(bag.length / 2);
-      // Split the first compartment into characters and find the duplicate
-      const match = bag1.split("").find((x) => bag2.includes(x));
-      if (!match) {
-        throw new Error(`failed to find a match! Is the input valid? ${bag}`);
-      }
-      return getPriority(match);
-    });
-  return sum(itemPriorities);
-};
+    .map(getCompartments)
+    .map(findItem)
+    .map(getPriority)
+    .reduce(sum);
 
-const findBadge = (bags: string[]) => {
-  const [one, ...others] = bags;
-  return one.split("").find((x) => others.every((y) => y.includes(x))) || "";
-};
-
-export const day3part2 = (input: string) => {
-  const elfGroups = chunk(input.trim().split("\n"), 3);
-  const groupBadgePriorities = elfGroups.map((bags) =>
-    getPriority(findBadge(bags)),
-  );
-  return sum(groupBadgePriorities);
-};
+export const day3part2 = (input: string) =>
+  input
+    .trim()
+    .split("\n")
+    .reduce(chunkBy(3), [] as string[][])
+    .map(findItem)
+    .map(getPriority)
+    .reduce(sum);
 
 console.log(day3part1(input));
 console.log(day3part2(input));

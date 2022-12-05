@@ -42,35 +42,17 @@ const execute = (
   inst: { from: number; to: number; count: number }[],
 ) => {
   inst.forEach((instruction) => {
-    for (let i = 0; i < instruction.count; i++) {
-      const val = stacks[instruction.from].pop()!;
-      stacks[instruction.to].push(val || "👀");
-    }
-    console.log(instruction);
-    console.log(
-      stacks
-        .map(
-          (x, i) =>
-            i +
-            1 +
-            x
-              .join("")
-              .concat(
-                i === instruction.from
-                  ? "⤴️"
-                  : i === instruction.to
-                  ? "⤵️"
-                  : "",
-              ),
-        )
-        .join("\n"),
+    const val = stacks[instruction.from].slice(-instruction.count)!;
+    stacks[instruction.from] = stacks[instruction.from].slice(
+      0,
+      -instruction.count,
     );
+    stacks[instruction.to] = stacks[instruction.to].concat(val || "👀");
   });
   const out = stacks.reduce((accum, val) => {
     accum = accum.concat(val[val.length - 1]);
     return accum;
   }, "");
-  console.log(stacks.map((x) => x.join("")));
   return out;
 };
 
@@ -78,7 +60,7 @@ export const day4part1 = (input: string) => {
   const [containers, instructions] = input.split("\n\n");
   const stacks = parseContainers(containers);
   console.log(containers);
-  console.log(stacks.map((x, i) => i + 1 + x.join("")).join("\n"));
+  console.log(stacks.map((x, i) => `${i + 1} ` + x.join("")).join("\n"));
   console.log("");
   return execute(stacks, parseInstructions(instructions));
 };

@@ -4,8 +4,8 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "start": "nodemon --exec ts-node --esm ./5/code.ts",
-    "test": "vitest dev ./5"
+    "start": "nodemon --exec ts-node --esm ./6/code.ts",
+    "test": "vitest dev ./6"
   },
   "author": "Carl Vitullo",
   "license": "UNLICENSED",
